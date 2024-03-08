@@ -1,0 +1,88 @@
+.body-with-background {
+  margin: 0;
+  padding: 0;
+  background-image: url('Bitmap.png');
+  background-size: 375px 812px; /* Width 375px, Height 812px */
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+
+.live-icon {
+  position: relative;
+  cursor: pointer;
+  height: 25px;
+  bottom: 85px;
+  left: 465px;
+  color: white;
+  border: 1px solid red;
+  background: red;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.close-tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 60px;
+  width: 300px;
+}
+
+.closetab-button {
+  border: 0;
+  background-color: transparent;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.live-tab {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: red;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.homepage-content {
+  padding-top: 40%;
+}
+
+.current-location {
+  display: flex;
+  justify-content: flex-start;
+  color: white;
+  border: 1px solid darkslategray;
+  border-radius: 10px;
+  padding: 0 15px;
+  align-items: center;
+  width: fit-content;
+  gap: 15px;
+}
+
+.loc-shape {
+  width: 15px;
+  height: 15px;
+}
+
+.location-name {
+  color: white;
+  font-size: 30px;
+  padding-top: 15%
+}
+
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .close-tab {
+    padding-top: 12rem;
+  }
+
+  .body-with-background {
+    background-size: 400px 1000px;
+  }
+}
