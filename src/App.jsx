@@ -8,27 +8,27 @@ const App = () => {
   const [showFetchData, setShowFetchData] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const url = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=New York&days=3';
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '73e1864bb1msh876644e6ba79155p17d47ejsn2ffca3de5ba7',
-          'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
-        }
-      };
+    fetchData('New York'); // Default location
+  }, []);
 
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        setApiData(result);
-      } catch (error) {
-        console.log(error);
+  const fetchData = async (location) => {
+    const url = `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${location}&days=3`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '73e1864bb1msh876644e6ba79155p17d47ejsn2ffca3de5ba7',
+        'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
       }
     };
 
-    fetchData();
-  }, []);
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setApiData(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleToggleFetchData = () => {
     setShowFetchData(!showFetchData);
@@ -38,7 +38,7 @@ const App = () => {
     <div className='container'>
       {apiData ? (
         showFetchData ? (
-          <FetchData onToggleFetchData={handleToggleFetchData} apiData={apiData} />
+          <FetchData onToggleFetchData={handleToggleFetchData} apiData={apiData} fetchData={fetchData}/>
         ) : (
           <Imagepage onToggleFetchData={handleToggleFetchData} apiData={apiData} />
         )

@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import weatherImage from './weather.png';
 
-const FetchData = ({ onToggleFetchData, apiData }) => {
-  const lastUpdatedTime = apiData && apiData.current && apiData.current.last_updated;
+const FetchData = ({ onToggleFetchData, apiData, fetchData }) => {
+  const [searchLoc, setSearchLoc] = useState('');
+  const [showSearchTab, setShowSearchTab] = useState(false);
+
+  const toggleSearchTab = () => {
+    if (searchLoc) {
+      fetchData(searchLoc);
+    } else {
+      setShowSearchTab(!showSearchTab);
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchLoc(e.target.value);
+  };
+
+  const lastUpdatedTime = apiData?.current?.last_updated;
 
   const getNextFourHours = (time) => {
     const nextFourHours = [];
@@ -28,19 +43,31 @@ const FetchData = ({ onToggleFetchData, apiData }) => {
           <div className="bar1"></div>
           <div className="bar2"></div>
         </div>
-        <i className="fa fa-search"></i>
+        <div className="search-container">
+          <button className="search-icon" onClick={toggleSearchTab}>
+            <i className="fa fa-search"></i>
+          </button>
+          {showSearchTab && (
+            <input
+              type="text"
+              value={searchLoc}
+              onChange={handleSearchChange}
+              placeholder="Enter location"
+            />
+          )}
+        </div>
       </div>
       <div className='city-details'>
         <div className='city-info'>
           <div className='city-name'>
-            {apiData && apiData.location.name},<br></br>{apiData && apiData.location.country}
+            {apiData?.location.name},<br></br>{apiData?.location.country}
           </div>
           <div className='date'>
             {apiData && apiData.current.last_updated.split(" ")[0] && formatDate(apiData.current.last_updated.split(" ")[0])}
           </div>
           <div className='weather-icon'>
-            <img src={`https:${apiData && apiData.current.condition.icon}`} alt="Weather Icon" className='icon-img'/>
-            <span>{apiData && apiData.current.condition.text}</span>
+            <img src={`https:${apiData?.current?.condition.icon}`} alt="Weather Icon" className='icon-img'/>
+            <span>{apiData?.current?.condition.text}</span>
           </div>
         </div>
         <div className='city-image'>
@@ -50,9 +77,9 @@ const FetchData = ({ onToggleFetchData, apiData }) => {
       <button onClick={onToggleFetchData} className='live-icon'>LIVE</button>
       <div className='weather-predictor'>
         <div className='current-weather'>
-          <div>{apiData && apiData.current.last_updated.split(" ")[1]}</div>
-          <div><img src={`https:${apiData && apiData.current.condition.icon}`} alt='weather-icon' /></div>
-          <div>{apiData && apiData.current.temp_c}℃</div>
+          <div>{apiData?.current?.last_updated.split(" ")[1]}</div>
+          <div><img src={`https:${apiData?.current?.condition.icon}`} alt='weather-icon' /></div>
+          <div>{apiData?.current?.temp_c}℃</div>
         </div>
         <hr></hr>
         {nextFourHours.map((hour, index) => {
@@ -75,15 +102,15 @@ const FetchData = ({ onToggleFetchData, apiData }) => {
         <div className='additional-info-item'>
           <div className='Precipitation-data'>
             <p className='Precipitation'>Precipitation</p>
-            <div>{apiData && apiData.current.uv}</div>
+            <div>{apiData?.current?.uv}</div>
           </div>
           <div className='Humidity-data'>
             <p className='humidity'>Humidity</p>
-            <div>{apiData && apiData.current.humidity}</div>
+            <div>{apiData?.current?.humidity}</div>
           </div>
           <div className='Windy-data'>
             <p className='windy'>Windy</p>
-            <div>{apiData && apiData.current.wind_kph}km/h</div>
+            <div>{apiData?.current?.wind_kph}km/h</div>
           </div>
         </div>
       </div>
